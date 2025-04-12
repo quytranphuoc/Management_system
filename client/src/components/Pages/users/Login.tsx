@@ -58,7 +58,7 @@ const Login: React.FC = () => {
             type="email"
             placeholder="Email"
             value={email}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
             onChange={(e) => setEmail(e.target.value)}
             required
           />
@@ -66,13 +66,13 @@ const Login: React.FC = () => {
             type="password"
             placeholder="Password"
             value={password}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
             onChange={(e) => setPassword(e.target.value)}
             required
           />
           <button
             type="submit"
-            className="w-full bg-green-700 text-white py-2 rounded-md hover:bg-green-800 transition duration-200"
+            className="w-full bg-[#3c50e0] text-white py-2 rounded-md hover:bg-gray-800 transition duration-200"
           >
             Signin
           </button>
@@ -94,7 +94,7 @@ const Login: React.FC = () => {
       </div>
 
       {/* Right - Welcome */}
-      <div className="w-1/2 bg-gradient-to-br from-green-500 to-green-700 text-white flex flex-col justify-center items-center px-10">
+      <div className="w-1/2 bg-gradient-to-br from-gray-800 to-[#3c50e0] text-white flex flex-col justify-center items-center px-10">
         <h2 className="text-3xl font-bold mb-4">Welcome back!</h2>
         <p className="text-center max-w-md text-white/90 mb-6">
           Welcome back! We are so happy to have you here. It’s great to see you
@@ -102,7 +102,7 @@ const Login: React.FC = () => {
         </p>
         <Link
           to="/signup"
-          className="bg-white text-green-700 px-6 py-2 rounded-full font-medium hover:bg-green-100 transition duration-200"
+          className="bg-white text-gray-700 px-6 py-2 rounded-full font-medium hover:bg-gray-100 transition duration-200"
         >
           No account yet? Signup.
         </Link>

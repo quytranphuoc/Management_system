@@ -154,7 +154,7 @@ const SignUp: React.FC = () => {
 
           <button
             type="submit"
-            className="w-full bg-green-700 text-white py-2 rounded-md hover:bg-green-800 transition duration-200"
+            className="w-full bg-[#3c50e0] text-white py-2 rounded-md hover:bg-green-800 transition duration-200"
           >
             Sign Up
           </button>
@@ -169,7 +169,7 @@ const SignUp: React.FC = () => {
       </div>
 
       {/* Right - Welcome */}
-      <div className="w-1/2 bg-gradient-to-br from-green-500 to-green-700 text-white flex flex-col justify-center items-center px-10">
+      <div className="w-1/2 bg-gradient-to-br from-gray-800 to-[#3c50e0] text-white flex flex-col justify-center items-center px-10">
         <h2 className="text-3xl font-bold mb-4">Welcome!</h2>
         <p className="text-center max-w-md text-white/90 mb-6">
           Ready to join the community? Let’s get you set up and ready to explore
@@ -177,7 +177,7 @@ const SignUp: React.FC = () => {
         </p>
         <Link
           to="/login"
-          className="bg-white text-green-700 px-6 py-2 rounded-full font-medium hover:bg-green-100 transition duration-200"
+          className="bg-white text-[#3c50e0] px-6 py-2 rounded-full font-medium hover:bg-gray-200 transition duration-200"
         >
           Already a member? Login
         </Link>

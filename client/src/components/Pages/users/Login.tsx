@@ -31,7 +31,7 @@ const Login: React.FC = () => {
         await fetchUserDetails();
         const userType = response.data.user.userType;
         if (userType === "admin") {
-          navigate("/adminHomeScreen");
+          navigate("/admin");
         } else {
           navigate("/homeScreen");
         }

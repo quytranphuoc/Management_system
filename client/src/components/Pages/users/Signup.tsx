@@ -88,7 +88,7 @@ const SignUp: React.FC = () => {
                 />
                 User
               </label>
-              {/* <label className="flex items-center gap-2">
+              <label className="flex items-center gap-2">
                 <input
                   type="radio"
                   name="userType"
@@ -97,7 +97,7 @@ const SignUp: React.FC = () => {
                   onChange={handleInputChange}
                 />
                 Admin
-              </label> */}
+              </label>
             </div>
           </div>
 

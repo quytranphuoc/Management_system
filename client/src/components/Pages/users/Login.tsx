@@ -1,8 +1,17 @@
 import axios from "axios";
 import React, { useContext, useState, FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { UserContext } from "../../../contexts/UserContext";
+import { ethers } from "ethers";
+// import type { ExternalProvider } from "@ethersproject/providers";
+import type { Eip1193Provider } from "ethers";
+// Extend the Window interface to include the ethereum property
+declare global {
+  interface Window {
+    ethereum?: Eip1193Provider;
+  }
+}
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -31,7 +40,7 @@ const Login: React.FC = () => {
         await fetchUserDetails();
         const userType = response.data.user.userType;
         if (userType === "admin") {
-          navigate("/adminHomeScreen");
+          navigate("/admin");
         } else {
           navigate("/homeScreen");
         }
@@ -45,6 +54,53 @@ const Login: React.FC = () => {
       } else {
         toast.error("Something went wrong. Please try again later.");
       }
+    }
+  };
+  const handleMetaMaskLogin = async () => {
+    if (!window.ethereum) {
+      toast.error("MetaMask not found!");
+      return;
+    }
+
+    try {
+      // Yêu cầu người dùng kết nối ví
+      const provider = new ethers.BrowserProvider(window.ethereum!);
+      const signer = await provider.getSigner();
+      const address = await signer.getAddress();
+
+      // Gọi backend để lấy nonce từ DB
+      const nonceResponse = await axios.post(
+        "http://localhost:3000/api/auth_meta/request-nonce",
+        {
+          address,
+        }
+      );
+
+      const nonce = nonceResponse.data.nonce;
+
+      // Ký thông điệp bằng MetaMask
+      const signature = await signer.signMessage(`Login request: ${nonce}`);
+
+      // Gửi chữ ký lên server xác minh
+      const loginResponse = await axios.post(
+        "http://localhost:3000/api/auth_meta/metamask-login",
+        {
+          address,
+          signature,
+        }
+      );
+
+      if (loginResponse.data.success) {
+        toast.success("MetaMask login successful!");
+        localStorage.setItem("authToken", loginResponse.data.token);
+        await fetchUserDetails();
+        navigate("/homeScreen");
+      } else {
+        toast.error(loginResponse.data.message || "MetaMask login failed");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("MetaMask login error");
     }
   };
 
@@ -100,12 +156,18 @@ const Login: React.FC = () => {
           Welcome back! We are so happy to have you here. It’s great to see you
           again. We hope you had a safe and enjoyable time away.
         </p>
-        <Link
+        <button
+          onClick={handleMetaMaskLogin}
+          className="mt-4 bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition"
+        >
+          Signin with MetaMask
+        </button>
+        {/* <Link
           to="/signup"
           className="bg-white text-gray-700 px-6 py-2 rounded-full font-medium hover:bg-gray-100 transition duration-200"
         >
           No account yet? Signup.
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

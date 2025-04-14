@@ -1,5 +1,10 @@
 import React, { Suspense, lazy } from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import Header from "./components/layouts/Header";
 import Home from "./components/Pages/users/Home";
 import { ToastContainer } from "react-toastify";
@@ -34,7 +39,7 @@ const AppContent = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/homeScreen" element={<UserHomeScreen />} />
           <Route path="/admin" element={<AdminHomeScreen />}>
-          <Route path="user-management" element={<ListUserScreen />} />
+            <Route path="user-management" element={<ListUserScreen />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

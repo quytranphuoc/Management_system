@@ -13,6 +13,7 @@ import UserHomeScreen from "./components/Pages/users/UserHomeScreen";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { UserProvider } from "./contexts/UserContext";
 import ListUserScreen from "./components/Pages/admin/user_management/ListUserScreen";
+import StudentProfile from "./components/Pages/users/dashboard/Studentprofile";
 
 const Login = lazy(() => import("./components/Pages/users/Login"));
 const Signup = lazy(() => import("./components/Pages/users/Signup"));
@@ -42,6 +43,7 @@ const AppContent = () => {
             <Route path="user-management" element={<ListUserScreen />} />
           </Route>
           <Route path="*" element={<NotFound />} />
+          <Route path="/user/profile" element={<StudentProfile />} />
         </Routes>
       </Suspense>
       <ToastContainer

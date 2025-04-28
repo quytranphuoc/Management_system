@@ -78,3 +78,4 @@ router.post("/metamask-login", async (req, res) => {
 });
 // routes/auth.ts
 
+export default router;

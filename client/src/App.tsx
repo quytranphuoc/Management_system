@@ -14,6 +14,9 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import { UserProvider } from "./contexts/UserContext";
 import ListUserScreen from "./components/Pages/admin/user_management/ListUserScreen";
 import StudentProfile from "./components/Pages/users/dashboard/Studentprofile";
+import TimelineApp from "./components/Pages/users/dashboard/TimeLine";
+import GradeTable from "./components/Pages/users/dashboard/LearningResults";
+import Payment from "./components/Pages/users/dashboard/Tuition";
 
 const Login = lazy(() => import("./components/Pages/users/Login"));
 const Signup = lazy(() => import("./components/Pages/users/Signup"));
@@ -38,12 +41,17 @@ const AppContent = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/homeScreen" element={<UserHomeScreen />} />
+          <Route path="/homeScreen" element={<UserHomeScreen />}>
+            <Route path="profile" element={<StudentProfile />} />
+            <Route path="timeline" element={<TimelineApp />} />
+            <Route path="learning-results" element={<GradeTable />} />
+            <Route path="tuition" element={<Payment />} />
+          </Route>
+
           <Route path="/admin" element={<AdminHomeScreen />}>
             <Route path="user-management" element={<ListUserScreen />} />
           </Route>
           <Route path="*" element={<NotFound />} />
-          <Route path="/user/profile" element={<StudentProfile />} />
         </Routes>
       </Suspense>
       <ToastContainer

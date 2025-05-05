@@ -1,0 +1,172 @@
+[
+  {
+    "id": "user1",
+    "on_chain": {
+      "student_id": "21IT166",
+      "full_name": "TRần Phước Quý",
+      "class": "21SE3",
+      "faculty": "Công nghệ thông tin",
+      "profile_hash": "0x3c905ab7f7b601afc2b15a5258bf07f691242267831a2c7d7bf59794f9a6ddae"
+    },
+    "off_chain": {
+      "email": "phuocquy@gmail.com",
+      "phone": "7971845774",
+      "address": "Da Nang, Viet Nam",
+      "account_status": "active"
+    }
+  },
+  {
+    "id": "user2",
+    "on_chain": {
+      "student_id": "21IT167",
+      "full_name": "Trần Hùng Anh",
+      "class": "21SE3",
+      "faculty": "Công nghệ thông tin",
+      "profile_hash": "0xedfd88412c68d6dcf8879c786d03799dcc8ad0fbf405ca26e0275c8775facba8"
+    },
+    "off_chain": {
+      "email": "hunganh@gmail.com",
+      "phone": "767-049-0421x445",
+      "address": "Da Nang, Viet Nam",
+      "account_status": "active"
+    }
+  },
+  {
+    "id": "user3",
+    "on_chain": {
+      "student_id": "21IT168",
+      "full_name": "Phạm Hữu Thạch",
+      "class": "21SE3",
+      "faculty": "Công nghệ thông tin",
+      "profile_hash": "0x33545f1df9bd449e679d6fd7f6087ca76e7b45935af70b96b9a544aca4afa74e"
+    },
+    "off_chain": {
+      "email": "huuthach@gmail.com",
+      "phone": "001-598-958",
+      "address": "Da Nang, Viet Nam",
+      "account_status": "active"
+    }
+  },
+  {
+    "id": "user4",
+    "on_chain": {
+      "student_id": "SV0004",
+      "full_name": "Lisa Gonzalez",
+      "class": "KTPM03",
+      "faculty": "Công nghệ thông tin",
+      "profile_hash": "0xca775e6bdf1a662a35d550a317254c247aaa8eb222164f7ba406239fd4a27368"
+    },
+    "off_chain": {
+      "email": "lisabradford@hotmail.com",
+      "phone": "685-517-02134",
+      "address": "Da Nang, Viet Nam",
+      "account_status": "active"
+    }
+  },
+  {
+    "id": "user5",
+    "on_chain": {
+      "student_id": "SV0005",
+      "full_name": "Joseph Davis",
+      "class": "KTPM01",
+      "faculty": "Công nghệ thông tin",
+      "profile_hash": "0xc842cb5a5bf1e1cdfe96e3288a5a8ddea3f7c9761ef6513bde5729a680b15bf0"
+    },
+    "off_chain": {
+      "email": "rodriguezbruce@gmail.com",
+      "phone": "261.271.1686x3359",
+      "address": "1265 Paul Garden Apt. 409, Sarahfort, MS 88417",
+      "account_status": "inactive"
+    }
+  },
+  {
+    "id": "user6",
+    "on_chain": {
+      "student_id": "SV0006",
+      "full_name": "Mary Stevens",
+      "class": "KTPM05",
+      "faculty": "Công nghệ thông tin",
+
+      "grades": {
+        "Cấu trúc dữ liệu": 9.6,
+        "Cơ sở dữ liệu": 7.2
+      },
+      "profile_hash": "0x1234e00021cd7dfb07b8081b912e9e23e8814287eadb18faf066de7a9a2f0828"
+    },
+    "off_chain": {
+      "email": "donald34@gmail.com",
+      "phone": "+1-735-952-3044",
+      "address": "Da Nang, Viet Nam",
+      "account_status": "active"
+    }
+  },
+  {
+    "id": "user7",
+    "on_chain": {
+      "student_id": "SV0007",
+      "full_name": "Jennifer Jones",
+      "class": "KTPM04",
+      "faculty": "Công nghệ thông tin",
+      "profile_hash": "0x0b571fbb5f3b60dbd15f1641a6967106e9a1add7ff667e310ec982c00234127b"
+    },
+    "off_chain": {
+      "email": "troberts@gould.info",
+      "phone": "112-226-6004x805",
+      "address": "Unit 5227 Box 0654, DPO AP 44184",
+      "account_status": "active"
+    }
+  },
+  {
+    "id": "user8",
+    "on_chain": {
+      "student_id": "SV0008",
+      "full_name": "Amanda Nelson",
+      "class": "KTPM03",
+      "faculty": "Công nghệ thông tin",
+
+      "profile_hash": "0xfd0327468c266e38fb361adacd3e0e9a5fa9acbaf78b2f98a3466e6386174378"
+    },
+    "off_chain": {
+      "email": "drodriguez@gmail.com",
+      "phone": "1769871261",
+      "address": "5768 Oscar Roads, Andrewland, ID 34748",
+      "account_status": "active"
+    }
+  },
+  {
+    "id": "user9",
+    "on_chain": {
+      "student_id": "SV0009",
+      "full_name": "Jeremiah Summers",
+      "class": "KTPM01",
+      "faculty": "Công nghệ thông tin",
+      "grades": {
+        "Mạng máy tính": 9.9,
+        "Lập trình C": 8.9
+      },
+      "profile_hash": "0xa7b303fdaa8e9bae3aa9391e88e82520ada84a919a48621b0937e8b864e054e8"
+    },
+    "off_chain": {
+      "email": "ystephens@grant-velazquez.com",
+      "phone": "921.442.2591x366",
+      "address": "USNS Greene, FPO AA 74395",
+      "account_status": "inactive"
+    }
+  },
+  {
+    "id": "user10",
+    "on_chain": {
+      "student_id": "SV0010",
+      "full_name": "Cynthia Huynh",
+      "class": "KTPM01",
+      "faculty": "Công nghệ thông tin",
+      "profile_hash": "0x4611a0abea0113bbb58ebf8dff28257818c2a0fc490e09643a87d0c1150e2924"
+    },
+    "off_chain": {
+      "email": "rebeccamoore@gmail.com",
+      "phone": "+1-672-278-8864x828",
+      "address": "517 Humphrey Corner, Lake Cindy, SD 24665",
+      "account_status": "inactive"
+    }
+  }
+]

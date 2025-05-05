@@ -35,8 +35,10 @@ const Login: React.FC = () => {
       if (response.data.success) {
         toast.success("Login successful!");
         const token = response.data.token;
+        localStorage.setItem("userId", response.data.user.id);
         localStorage.setItem("authToken", token);
-
+        console.log("userId in localStorage:", localStorage.getItem("userId"));
+        console.log("token in localStorage:", localStorage.getItem("token"));
         await fetchUserDetails();
         const userType = response.data.user.userType;
         if (userType === "admin") {

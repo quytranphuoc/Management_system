@@ -16,13 +16,14 @@ export const registerUser = async (user) => {
     }
 
     const hashedPassword = await bcrypt.hash(user.password, 10);
-    const query = `INSERT INTO users (name, email, mobile, password, userType) VALUES ($1, $2, $3, $4, $5)`;
+    const query = `INSERT INTO users (student_id, name, email, phone, password, user_type) VALUES ($1, $2, $3, $4, $5, $6)`;
     const values = [
+      user.student_id,
       user.username,
       user.email,
-      user.mobile,
+      user.phone,
       hashedPassword,
-      user.userType,
+      user.user_type,
     ];
     await pool.query(query, values);
 
@@ -79,7 +80,7 @@ export const getUserFromToken = async (token) => {
     const decoded = jwt.verify(trimmedToken, JWT_SECRET);
 
     const result = await pool.query(
-      "SELECT id, name, email, mobile, userType FROM users WHERE id = $1",
+      "SELECT id, name, email, phone, user_type FROM users WHERE id = $1",
       [decoded.id]
     );
 

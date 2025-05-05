@@ -20,6 +20,9 @@ CREATE TABLE IF NOT EXISTS users (
   address TEXT,
   email VARCHAR(100) UNIQUE,
   password VARCHAR(255),
+  user_type ENUM('user','admin') DEFAULT 'user',
+  wallet_address VARCHAR(255),
+  nonce VARCHAR(100),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );`;
 const postTableQuery = `

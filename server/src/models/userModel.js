@@ -7,7 +7,9 @@ class UserModel {
     this.address = user.address; // New field
     this.email = user.email;
     this.password = user.password;
-    this.userType = user.userType;
+    this.user_type = user.user_type;
+    this.wallet_address = user.wallet_address;
+    this.nonce = user.nonce;
   }
 }
 

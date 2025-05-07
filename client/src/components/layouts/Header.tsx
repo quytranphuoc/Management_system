@@ -1,10 +1,12 @@
+
 import React, { useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { UserContext } from "../../contexts/UserContext";
 import profileImg from "../../assets/image/img1.png";
 
-import { AiOutlineLogout } from "react-icons/ai";
+import Logout from "@mui/icons-material/Logout";
+
 const Header: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -17,7 +19,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <nav className="bg-yellow-300 shadow-md px-6 py-4 flex justify-between items-center">
+    <nav className="bg-white shadow-md px-6 py-4 flex justify-between items-center">
       <div className="flex items-center gap-2">
         <span className="text-lg font-semibold ">
           <Link to="/homeScreen ">Daotao</Link>
@@ -77,7 +79,7 @@ const Header: React.FC = () => {
                 onClick={logout}
                 className="text-red-500 hover:text-red-600"
               >
-                <AiOutlineLogout />
+                <Logout />
               </button>
             </li>
           </>
@@ -99,7 +101,7 @@ const Header: React.FC = () => {
               <Link
                 to="/signup"
                 className={`hover:text-blue-500 ${
-                  location.pathname === "/signup"
+location.pathname === "/signup"
                     ? "text-blue-600 font-bold"
                     : "text-gray-700"
                 }`}
@@ -115,86 +117,3 @@ const Header: React.FC = () => {
 };
 
 export default Header;
-
-// import React, { useContext } from "react";
-// import { Link, useLocation, useNavigate } from "react-router-dom";
-// import { UserContext } from "../../contexts/UserContext";
-// // eslint-disable-next-line @typescript-eslint/no-unused-vars
-// import profileImg from "../../../assets/image/img1.png";
-
-// const Header: React.FC = () => {
-//   const location = useLocation();
-//   const navigate = useNavigate();
-//   const { userData, setUserData } = useContext(UserContext);
-
-//   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-//   const logout = () => {
-//     localStorage.clear();
-//     setUserData(null);
-//     navigate("/");
-//   };
-
-//   // ✅ Nếu đã đăng nhập thì không hiển thị Header
-//   if (userData) return null;
-
-//   return (
-//     <nav className="bg-white shadow-md px-6 py-4 flex justify-between items-center">
-//       <div className="flex items-center gap-2">
-//         <span className="text-lg font-semibold">Daotao</span>
-//       </div>
-
-//       <ul className="flex items-center space-x-6">
-//         <li>
-//           <Link
-//             to="/"
-//             className={`hover:text-blue-500 ${
-//               location.pathname === "/"
-//                 ? "text-blue-600 font-bold"
-//                 : "text-gray-700"
-//             }`}
-//           >
-//             Home
-//           </Link>
-//         </li>
-//         <li>
-//           <Link
-//             to="/jobs"
-//             className={`hover:text-blue-500 ${
-//               location.pathname === "/jobs"
-//                 ? "text-blue-600 font-bold"
-//                 : "text-gray-700"
-//             }`}
-//           >
-//             Jobs
-//           </Link>
-//         </li>
-//         <li>
-//           <Link
-//             to="/login"
-//             className={`hover:text-blue-500 ${
-//               location.pathname === "/login"
-//                 ? "text-blue-600 font-bold"
-//                 : "text-gray-700"
-//             }`}
-//           >
-//             Login
-//           </Link>
-//         </li>
-//         <li>
-//           <Link
-//             to="/signup"
-//             className={`hover:text-blue-500 ${
-//               location.pathname === "/signup"
-//                 ? "text-blue-600 font-bold"
-//                 : "text-gray-700"
-//             }`}
-//           >
-//             Sign Up
-//           </Link>
-//         </li>
-//       </ul>
-//     </nav>
-//   );
-// };
-
-// export default Header;

@@ -25,9 +25,9 @@ module.exports = {
     },
   },
   networks: {
-    localhost: {
-      url: "http://127.0.0.1:8545",
-    },
+    // localhost: {
+    //   url: "http://127.0.0.1:8545",
+    // },
     // Nếu sau này bạn muốn deploy lên Goerli chẳng hạn:
     /*
     goerli: {
@@ -35,9 +35,15 @@ module.exports = {
       accounts: ["YOUR_PRIVATE_KEY"]
     }
     */
+    sepolia: {
+      url: `https://sepolia.infura.io/v3/6fcd4f242e4a4b1fbaac14561548fbe3`,
+      accounts: [
+        "ede4c9ffd9357124fab7fcb5416447be7f4cd701af46b8ca03990f7a05816463",
+      ],
+    },
   },
   paths: {
-    sources: "./contract", // nơi chứa các file .sol của bạn
+    sources: "./contracts", // nơi chứa các file .sol của bạn
     tests: "./test",
     cache: "./cache",
     artifacts: "./artifacts",

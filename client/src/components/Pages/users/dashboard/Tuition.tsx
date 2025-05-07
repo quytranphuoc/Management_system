@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Box,
   Button,
@@ -18,102 +19,192 @@ import {
   CheckCircle as CheckCircleIcon,
   Error as ErrorIcon,
 } from "@mui/icons-material";
+import { useState } from "react";
+import { ethers } from "ethers";
+import { toast } from "react-toastify";
+
+declare global {
+  interface Window {
+    ethereum?: any;
+  }
+}
 
 export default function Payment() {
+  const [ethAmount, setEthAmount] = useState<string>("");
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+
+  const handleConnectWallet = async () => {
+    if (!window.ethereum) {
+      toast.error("Vui lòng cài đặt MetaMask");
+      return;
+    }
+
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const accounts = await provider.send("eth_requestAccounts", []);
+      setWalletAddress(accounts[0]);
+      toast.success("Đã kết nối MetaMask!");
+    } catch (err) {
+      console.error(err);
+      toast.error("Kết nối ví thất bại!");
+    }
+  };
+
+  const handlePayment = async () => {
+    if (!walletAddress) {
+      toast.warning("Vui lòng kết nối MetaMask trước");
+      return;
+    }
+
+    try {
+      setStatus("loading");
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      const tx = await signer.sendTransaction({
+        to: "0x70997970C51812dc3A010C7d01b50e0d17dc79C8", // <-- Thay bằng ví nhận tiền
+        value: ethers.parseEther(ethAmount),
+      });
+
+      await tx.wait();
+      setStatus("success");
+      toast.success("Giao dịch thành công!");
+    } catch (error) {
+      console.error(error);
+      setStatus("error");
+      toast.error("Giao dịch thất bại!");
+    } finally {
+      setStatus("idle");
+    }
+  };
+
   return (
     <Box
       sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        position: "relative",
         minHeight: "100vh",
         bgcolor: "#f5f5f5",
         p: 2,
       }}
     >
-      <Card sx={{ width: "100%", maxWidth: 450, boxShadow: 3 }}>
-        <CardHeader
-          title={
-            <Typography variant="h5" align="center" fontWeight="bold">
-              Thanh Toán
-            </Typography>
-          }
-          subheader={
-            <Typography
-              variant="subtitle1"
-              align="center"
-              color="text.secondary"
-            >
-              Nhập số tiền và nhấn thanh toán để tiếp tục
-            </Typography>
-          }
-        />
+      {/* Nút Connect ở góc phải trên cùng */}
+      <Box sx={{ position: "absolute", top: 16, right: 16 }}>
+        {walletAddress ? (
+          <Typography variant="body2" fontWeight="bold">
+            Đã kết nối: {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
+          </Typography>
+        ) : (
+          <Button variant="outlined" onClick={handleConnectWallet}>
+            Kết nối ví
+          </Button>
+        )}
+      </Box>
 
-        <CardContent sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-          <TextField
-            label="Số tiền (ETH)"
-            type="number"
-            placeholder="0.01"
-            fullWidth
-            variant="outlined"
+      {/* Khung thanh toán */}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100%",
+          pt: 8, // đẩy xuống để không đè nút
+        }}
+      >
+        <Card sx={{ width: "100%", maxWidth: 450, boxShadow: 3 }}>
+          <CardHeader
+            title={
+              <Typography variant="h5" align="center" fontWeight="bold">
+                Thanh Toán
+              </Typography>
+            }
+            subheader={
+              <Typography
+                variant="subtitle1"
+                align="center"
+                color="text.secondary"
+              >
+                Nhập số tiền và nhấn thanh toán để tiếp tục
+              </Typography>
+            }
           />
 
-          <Paper
-            variant="outlined"
-            sx={{
-              p: 2,
-              bgcolor: "#fff8e1",
-              borderColor: "#ffe57f",
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-            }}
+          <CardContent
+            sx={{ display: "flex", flexDirection: "column", gap: 3 }}
           >
-            <WalletIcon color="warning" />
-            <Typography variant="body2">
-              Thanh toán sẽ được thực hiện qua ví Metamask của bạn
-            </Typography>
-          </Paper>
+            <TextField
+              label="Số tiền (ETH)"
+              type="number"
+              placeholder="0.01"
+              value={ethAmount}
+              onChange={(e) => setEthAmount(e.target.value)}
+              fullWidth
+              variant="outlined"
+            />
 
-          {status === "success" && (
-            <Alert severity="success" icon={<CheckCircleIcon />}>
-              <AlertTitle>Giao dịch thành công!</AlertTitle>
-              <Link target="_blank" rel="noopener noreferrer" underline="hover">
-                Xem giao dịch trên Etherscan
-              </Link>
-            </Alert>
-          )}
+            <Paper
+              variant="outlined"
+              sx={{
+                p: 2,
+                bgcolor: "#fff8e1",
+                borderColor: "#ffe57f",
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+              }}
+            >
+              <WalletIcon color="warning" />
+              <Typography variant="body2">
+                Thanh toán sẽ được thực hiện qua ví Metamask của bạn
+              </Typography>
+            </Paper>
 
-          {status === "error" && (
-            <Alert severity="error" icon={<ErrorIcon />}>
-              <AlertTitle>Giao dịch thất bại</AlertTitle>
-            </Alert>
-          )}
-
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            fullWidth
-            disabled={status === "loading"}
-            sx={{
-              bgcolor: "#f57c00",
-              "&:hover": { bgcolor: "#ef6c00" },
-              py: 1.5,
-            }}
-            endIcon={status === "loading" ? undefined : <ArrowForwardIcon />}
-          >
-            {status === "loading" ? (
-              <>
-                <CircularProgress size={24} color="inherit" sx={{ mr: 1 }} />{" "}
-                Đang xử lý...
-              </>
-            ) : (
-              "Thanh Toán Ngay"
+            {status === "success" && (
+              <Alert severity="success" icon={<CheckCircleIcon />}>
+                <AlertTitle>Giao dịch thành công!</AlertTitle>
+                <Link
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  underline="hover"
+                >
+                  Xem giao dịch trên Etherscan
+                </Link>
+              </Alert>
             )}
-          </Button>
-        </CardContent>
-      </Card>
+
+            {status === "error" && (
+              <Alert severity="error" icon={<ErrorIcon />}>
+                <AlertTitle>Giao dịch thất bại</AlertTitle>
+              </Alert>
+            )}
+
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              fullWidth
+              disabled={!walletAddress || status === "loading"}
+              sx={{
+                bgcolor: "#f57c00",
+                "&:hover": { bgcolor: "#ef6c00" },
+                py: 1.5,
+              }}
+              onClick={handlePayment}
+              endIcon={status === "loading" ? undefined : <ArrowForwardIcon />}
+            >
+              {status === "loading" ? (
+                <>
+                  <CircularProgress size={24} color="inherit" sx={{ mr: 1 }} />
+                  Đang xử lý...
+                </>
+              ) : (
+                "Thanh Toán Ngay"
+              )}
+            </Button>
+          </CardContent>
+        </Card>
+      </Box>
     </Box>
   );
 }

@@ -41,6 +41,9 @@ const Login: React.FC = () => {
         console.log("token in localStorage:", localStorage.getItem("token"));
         await fetchUserDetails();
         const userType = response.data.user.userType;
+
+        console.log("type:", response.data);
+        
         if (userType === "admin") {
           navigate("/admin");
         } else {

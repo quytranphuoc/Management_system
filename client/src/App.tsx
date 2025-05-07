@@ -1,35 +1,78 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { Suspense, lazy } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
+import Header from "./components/layouts/Header";
+import Home from "./components/Pages/users/Home";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import default CSS for toastify
+import UserHomeScreen from "./components/Pages/users/UserHomeScreen";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import { UserProvider } from "./contexts/UserContext";
+import ListUserScreen from "./components/Pages/admin/user_management/ListUserScreen";
+import StudentProfile from "./components/Pages/users/dashboard/Studentprofile";
+import TimelineApp from "./components/Pages/users/dashboard/TimeLine";
+import GradeTable from "./components/Pages/users/dashboard/LearningResults";
+import Payment from "./components/Pages/users/dashboard/Tuition";
 
-function App() {
-  const [count, setCount] = useState(0)
+const Login = lazy(() => import("./components/Pages/users/Login"));
+const Signup = lazy(() => import("./components/Pages/users/Signup"));
+const NotFound = lazy(() => import("./components/Pages/NotFound"));
+const AdminHomeScreen = lazy(
+  () => import("./components/Pages/admin/AdminManagerScreen")
+);
+
+// Wrapper component to handle conditional rendering of Header
+const AppContent = () => {
+  const location = useLocation();
+
+  // Define routes where the Header should not be displayed
+  const hideHeaderRoutes = location.pathname.startsWith("/admin");
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+      {/* Conditionally render the Header */}
+      {!hideHeaderRoutes && <Header />}
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/homeScreen" element={<UserHomeScreen />}>
+            <Route path="profile" element={<StudentProfile />} />
+            <Route path="timeline" element={<TimelineApp />} />
+            <Route path="learning-results" element={<GradeTable />} />
+            <Route path="tuition" element={<Payment />} />
+          </Route>
 
-export default App
+          <Route path="/admin" element={<AdminHomeScreen />}>
+            <Route path="user-management" element={<ListUserScreen />} />
+          </Route>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar={true}
+        closeOnClick
+        theme="colored"
+      />
+    </>
+  );
+};
+
+const App = () => {
+  return (
+    <UserProvider>
+      <Router>
+        <AppContent />
+      </Router>
+    </UserProvider>
+  );
+};
+
+export default App;

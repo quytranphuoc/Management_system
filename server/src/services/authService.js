@@ -48,6 +48,7 @@ export const loginUser = async (email, password) => {
     }
 
     const user = result.rows[0];
+    console.log("User found:", user);
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
@@ -56,7 +57,7 @@ export const loginUser = async (email, password) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { id: user.id, email: user.email, userType: user.usertype },
+      { id: user.id, email: user.email, userType: user.user_type },
       JWT_SECRET,
       { expiresIn: "1h" }
     );
@@ -65,7 +66,7 @@ export const loginUser = async (email, password) => {
       success: true,
       message: "Login successful",
       token,
-      user: { id: user.id, email: user.email, userType: user.usertype },
+      user: { id: user.id, email: user.email, userType: user.user_type },
     };
   } catch (error) {
     console.error("Login error:", error);

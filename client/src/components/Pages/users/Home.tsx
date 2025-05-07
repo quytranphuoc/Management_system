@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import Slider from "react-slick";
-import Header from "../../../components/layouts/Header";
 
 type Notice = {
   date: string;
@@ -25,7 +24,7 @@ const notices: Notice[] = [
   {
     date: "28/03/2025",
     title:
-      "Hồ sơ mời tài trợ Kỷ niệm 50 năm thành lập Trường ĐH Bách khoa, ĐHĐN",
+      "Hồ sơ mời tài trợ Kỷ niệm 50 năm thành lập Trường ĐH Việt Hàn, ĐHĐN",
     isHot: true,
   },
   {
@@ -91,17 +90,17 @@ const Home: React.FC = () => {
         <img
           src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img/https://vku.udn.vn/wp-content/uploads/2025/04/Bia-50-nam-ngay-giai-phong.jpg"
           alt="image 1"
-          className="h-[500px] w-full object-cover"
+          className="h-[700px] w-full object-cover"
         />
         <img
           src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img/https://vku.udn.vn/wp-content/uploads/2025/02/Bia-FB-2025-2-scaled.jpg"
           alt="image 2"
-          className="h-[500px] w-full object-cover"
+          className="h-[700px] w-full object-cover"
         />
         <img
           src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img/https://vku.udn.vn/wp-content/uploads/2024/12/Banner-5-nam.jpg"
           alt="image 3"
-          className="h-[500px] w-full object-cover"
+          className="h-[700px] w-full object-cover"
         />
       </Slider>
 

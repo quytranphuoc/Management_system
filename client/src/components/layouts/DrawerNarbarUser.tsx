@@ -323,7 +323,7 @@ const DrawerNavbar: React.FC = () => {
       </nav>
 
       {/* Logout */}
-      <div className="border-t border-gray-200 p-4">
+      {/* <div className="border-t border-gray-200 p-4">
         <button
           onClick={logout}
           className="w-full flex items-center gap-3 px-4 py-2 rounded-md text-sm font-medium text-red-600 hover:bg-red-50"
@@ -331,7 +331,7 @@ const DrawerNavbar: React.FC = () => {
           <i className="fas fa-sign-out-alt"></i>
           Logout
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

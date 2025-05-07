@@ -370,7 +370,7 @@ const UserProfile: React.FC = () => {
           gender: result[3],
           address: result[4],
           className: result[5],
-          course: result[6],
+          department: result[6],
           subjects: result[7],
           grades: result[8],
           email: "",
@@ -426,10 +426,10 @@ const UserProfile: React.FC = () => {
           />
         </div>
         <div>
-          <label className="block text-sm text-gray-600 mb-1">Course</label>
+          <label className="block text-sm text-gray-600 mb-1">Department</label>
           <Input
-            placeholder="Course"
-            value={user?.course}
+            placeholder="Department"
+            value={user?.department}
             disabled={!isEditing}
           />
         </div>

@@ -7,14 +7,45 @@ export const getAllUsers = (req, res) => {
 };
 
 // Function to create a new user
+// Function to create a new user
 export const createUser = (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return res.status(400).json({ message: 'Email and password are required' });
+  const {
+    username,
+    studentId,
+    department,
+    phone,
+    address,
+    email,
+    password,
+    userType,
+  } = req.body;
+  if (!email || !password || !username) {
+    return res.status(400).json({ message: "Missing required fields" });
   }
-  
-  const newUser = { email, password }; // Create a new user object
-  users.push(newUser); // Add the new user to the array
-  
-  res.status(201).json({ message: 'User registered successfully', user: newUser });
+
+  const newUser = {
+    id: Date.now().toString(),
+    username,
+    studentId,
+    department,
+    phone,
+    address,
+    email,
+    password,
+    userType: userType || "user",
+  };
+
+  users.push(newUser);
+  res
+    .status(201)
+    .json({ message: "User registered successfully", user: newUser });
+};
+
+export const getUserById = (req, res) => {
+  const { id } = req.params;
+  const user = users.find((u) => u.id === id);
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+  res.json(user);
 };

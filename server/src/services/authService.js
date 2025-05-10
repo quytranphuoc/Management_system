@@ -16,13 +16,14 @@ export const registerUser = async (user) => {
     }
 
     const hashedPassword = await bcrypt.hash(user.password, 10);
-    const query = `INSERT INTO users (name, email, mobile, password, userType) VALUES ($1, $2, $3, $4, $5)`;
+    const query = `INSERT INTO users (student_id, name, email, phone, password, user_type) VALUES ($1, $2, $3, $4, $5, $6)`;
     const values = [
+      user.student_id,
       user.username,
       user.email,
-      user.mobile,
+      user.phone,
       hashedPassword,
-      user.userType,
+      user.user_type,
     ];
     await pool.query(query, values);
 
@@ -47,6 +48,7 @@ export const loginUser = async (email, password) => {
     }
 
     const user = result.rows[0];
+    console.log("User found:", user);
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
@@ -55,7 +57,7 @@ export const loginUser = async (email, password) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { id: user.id, email: user.email, userType: user.usertype },
+      { id: user.id, email: user.email, userType: user.user_type },
       JWT_SECRET,
       { expiresIn: "1h" }
     );
@@ -64,7 +66,7 @@ export const loginUser = async (email, password) => {
       success: true,
       message: "Login successful",
       token,
-      user: { id: user.id, email: user.email, userType: user.usertype },
+      user: { id: user.id, email: user.email, userType: user.user_type },
     };
   } catch (error) {
     console.error("Login error:", error);
@@ -79,7 +81,7 @@ export const getUserFromToken = async (token) => {
     const decoded = jwt.verify(trimmedToken, JWT_SECRET);
 
     const result = await pool.query(
-      "SELECT id, name, email, mobile, userType FROM users WHERE id = $1",
+      "SELECT id, name, email, phone, user_type FROM users WHERE id = $1",
       [decoded.id]
     );
 

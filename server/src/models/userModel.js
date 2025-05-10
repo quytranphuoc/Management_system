@@ -1,10 +1,16 @@
 class UserModel {
   constructor(user) {
     this.username = user.username;
+    this.student_id = user.student_id; // New field
+    this.department = user.department; // New field
+    this.phone = user.phone; // New field (renamed from 'mobile')
+    this.address = user.address; // New field
     this.email = user.email;
-    this.mobile = user.mobile;
     this.password = user.password;
-    this.userType=user.userType;
+    this.user_type = user.user_type;
+    this.wallet_address = user.wallet_address;
+    this.nonce = user.nonce;
   }
 }
+
 export default UserModel;

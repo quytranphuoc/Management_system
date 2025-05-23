@@ -22,6 +22,7 @@ import {
 import { useState } from "react";
 import { ethers } from "ethers";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 declare global {
   interface Window {
@@ -35,6 +36,7 @@ export default function Payment() {
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
+  const [transactionHash, setTransactionHash] = useState<string | null>(null);
 
   const handleConnectWallet = async () => {
     if (!window.ethereum) {
@@ -53,6 +55,43 @@ export default function Payment() {
     }
   };
 
+  const saveTransaction = async (txHash: string) => {
+    try {
+      const token = localStorage.getItem('authToken');
+      console.log('Token from localStorage:', token);
+      console.log('Transaction data:', {
+        amount: parseFloat(ethAmount),
+        transactionHash: txHash,
+        fromAddress: walletAddress,
+        toAddress: "0x70997970C51812dc3A010C7d01b50e0d17dc79C8"
+      });
+
+      if (!token) {
+        console.error('No token found in localStorage');
+        return;
+      }
+
+      const response = await axios.post('http://localhost:3000/api/transactions', {
+        amount: parseFloat(ethAmount),
+        transactionHash: txHash,
+        fromAddress: walletAddress,
+        toAddress: "0x70997970C51812dc3A010C7d01b50e0d17dc79C8"
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      console.log('Transaction saved successfully:', response.data);
+    } catch (error) {
+      console.error('Error saving transaction:', error);
+      if (axios.isAxiosError(error)) {
+        console.error('Error response:', error.response?.data);
+        console.error('Error status:', error.response?.status);
+        console.error('Error headers:', error.response?.headers);
+      }
+    }
+  };
+
   const handlePayment = async () => {
     if (!walletAddress) {
       toast.warning("Vui lòng kết nối MetaMask trước");
@@ -64,11 +103,13 @@ export default function Payment() {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
       const tx = await signer.sendTransaction({
-        to: "0x70997970C51812dc3A010C7d01b50e0d17dc79C8", // <-- Thay bằng ví nhận tiền
+        to: "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
         value: ethers.parseEther(ethAmount),
       });
 
       await tx.wait();
+      setTransactionHash(tx.hash);
+      await saveTransaction(tx.hash);
       setStatus("success");
       toast.success("Giao dịch thành công!");
     } catch (error) {
@@ -160,10 +201,11 @@ export default function Payment() {
               </Typography>
             </Paper>
 
-            {status === "success" && (
+            {status === "success" && transactionHash && (
               <Alert severity="success" icon={<CheckCircleIcon />}>
                 <AlertTitle>Giao dịch thành công!</AlertTitle>
                 <Link
+                  href={`https://sepolia.etherscan.io/tx/${transactionHash}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   underline="hover"

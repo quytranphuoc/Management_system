@@ -5,11 +5,11 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const pool = new Pool({
-  host: process.env.DB_HOST || "db.qgtdalpgfhcdfqpmbyna.supabase.co",
+  host: process.env.DB_HOST || "localhost",
   user: process.env.DB_USER || "postgres",
-  password: process.env.DB_PASSWORD || "chuyende4",
-  database: process.env.DB_DATABASE || "postgres",
-  port: process.env.DB_PORT || 5432, // PostgreSQL mặc định là 5432
+  password: process.env.DB_PASSWORD || "123456",
+  database: process.env.DB_DATABASE || "quanlyhososinhvien",
+  port: process.env.DB_PORT || 5433, // PostgreSQL mặc định là 5432
   max: 10, // connectionLimit tương đương
   idleTimeoutMillis: 30000, // tuỳ chọn: ngắt kết nối sau 30s không hoạt động
   connectionTimeoutMillis: 3000, // timeout khi kết nối
@@ -57,3 +57,17 @@ export { pool, checkConnection };
 // };
 
 // export { pool, checkConnection };
+
+// Create tables if they don't exist
+await pool.query(`
+  CREATE TABLE IF NOT EXISTS transactions (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id),
+    amount DECIMAL(18,8) NOT NULL,
+    transaction_hash VARCHAR(66) NOT NULL,
+    from_address VARCHAR(42) NOT NULL,
+    to_address VARCHAR(42) NOT NULL,
+    status VARCHAR(20) NOT NULL DEFAULT 'completed',
+    timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  );
+`);

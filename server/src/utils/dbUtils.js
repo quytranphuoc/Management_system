@@ -61,10 +61,11 @@ const createAllTable = async () => {
     // Tạo ENUM trước khi tạo bảng
     await pool.query(createEnumTypeQuery);
 
-    await createTable("Users", userTableQuery);
-    await createTable("Posts", postTableQuery);
+    // Tạo bảng theo thứ tự phù hợp với ràng buộc khóa ngoại
     await createTable("Departments", departmentTableQuery);
     await createTable("Classes", classTableQuery);
+    await createTable("Users", userTableQuery);
+    await createTable("Posts", postTableQuery);
 
     console.log("✅ All tables created successfully!");
   } catch (error) {

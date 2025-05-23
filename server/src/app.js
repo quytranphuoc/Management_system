@@ -5,8 +5,10 @@ import { checkConnection } from "./config/db.js";
 import createAllTable from "./utils/dbUtils.js";
 import authRoutes from "./routes/authRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+import transactionRoutes from "./routes/transactionRoutes.js";
 import routes from "./routes/auth.js";
 import cors from "cors";
+
 
 const app = express();
 app.use(cors());
@@ -16,6 +18,7 @@ app.use("/api/users", userRoutes); // Use user routes for API calls
 app.use("/api/auth", authRoutes); // Use user routes for API calls
 app.use("/api/auth_meta", routes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/transactions", transactionRoutes);
 app.listen(3000, async () => {
   console.log("Server running on port 3000");
   try {

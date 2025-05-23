@@ -17,6 +17,7 @@ import StudentProfile from "./components/Pages/users/dashboard/Studentprofile";
 import TimelineApp from "./components/Pages/users/dashboard/TimeLine";
 import GradeTable from "./components/Pages/users/dashboard/LearningResults";
 import Payment from "./components/Pages/users/dashboard/Tuition";
+import TransactionHistory from "./components/Pages/users/dashboard/TransactionHistory";
 
 const Login = lazy(() => import("./components/Pages/users/Login"));
 const Signup = lazy(() => import("./components/Pages/users/Signup"));
@@ -46,6 +47,7 @@ const AppContent = () => {
             <Route path="timeline" element={<TimelineApp />} />
             <Route path="learning-results" element={<GradeTable />} />
             <Route path="tuition" element={<Payment />} />
+            <Route path="transaction-history" element={<TransactionHistory />} />
           </Route>
 
           <Route path="/admin" element={<AdminHomeScreen />}>
